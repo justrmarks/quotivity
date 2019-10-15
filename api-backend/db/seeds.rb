@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+
+100.times do
+  res = RestClient.get('https://api.quotable.io/random')
+  data = JSON.parse(res)
+  icon = Icon.find_or_create_by(name: data['author'])
+  quote = Quote.find_or_create_by(text: data['content'], icon_id: icon.id )
+end
